@@ -5,6 +5,7 @@ import { handleServerAppError, handleServerNetworkError } from "utils/error-util
 import { setAppStatus } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
+import { clearTasksAndTodolists } from "common/actions/common.actions";
 
 const initialState: TasksStateType = {};
 
@@ -47,6 +48,9 @@ const slice = createSlice({
         action.payload.todolists.forEach((tl) => {
           state[tl.id] = [];
         });
+      })
+      .addCase(clearTasksAndTodolists, (state, action) => {
+        return {};
       });
   },
 });
@@ -64,9 +68,8 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   });
 };
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch) => {
-  todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
-    const action = removeTask({ taskId: taskId, todolistId: todolistId });
-    dispatch(action);
+  todolistsAPI.deleteTask(todolistId, taskId).then(() => {
+    dispatch(removeTask({ taskId: taskId, todolistId: todolistId }));
   });
 };
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch) => {
