@@ -1,17 +1,22 @@
-import { Dispatch } from "redux";
 import { authAPI } from "api/todolists-api";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setIsLoggedIn } from "features/Login/auth-reducer";
 
-const initialState: InitialStateType = {
-  status: "idle",
-  error: null,
-  isInitialized: false,
-};
+export const initializeAppTC = createAsyncThunk("app/initializeApp", async (param, { dispatch }) => {
+  const res = await authAPI.me();
+  if (res.data.resultCode === 0) {
+    dispatch(setIsLoggedIn({ isLoggedIn: true }));
+  } else {
+  }
+});
 
 const slice = createSlice({
   name: "app",
-  initialState: initialState,
+  initialState: {
+    status: "idle",
+    error: null,
+    isInitialized: false,
+  } as InitialStateType,
   reducers: {
     setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
       state.status = action.payload.status;
@@ -19,14 +24,16 @@ const slice = createSlice({
     setAppError: (state, action: PayloadAction<{ error: null | string }>) => {
       state.error = action.payload.error;
     },
-    setAppInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
-      state.isInitialized = action.payload.isInitialized;
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(initializeAppTC.fulfilled, (state) => {
+      state.isInitialized = true;
+    });
   },
 });
 
 export const appReducer = slice.reducer;
-export const { setAppStatus, setAppError, setAppInitialized } = slice.actions;
+export const { setAppStatus, setAppError } = slice.actions;
 export const appActions = slice.actions;
 
 // types
@@ -41,14 +48,3 @@ export type InitialStateType = {
 };
 
 export type AppInitialStateType = ReturnType<typeof slice.getInitialState>;
-
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-  authAPI.me().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setIsLoggedIn({ isLoggedIn: true }));
-    } else {
-    }
-
-    dispatch(setAppInitialized({ isInitialized: true }));
-  });
-};

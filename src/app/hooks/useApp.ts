@@ -24,17 +24,17 @@ export const useApp = () => {
   }, []);
 
   const addTask = useCallback((title: string, todoListId: string) => {
-    const thunk = addTaskTC(title, todoListId);
+    const thunk = addTaskTC({ title, todolistId: todoListId });
     dispatch(thunk);
   }, []);
 
   const changeTaskStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
-    const thunk = updateTaskTC(taskId, { status: status }, todoListId);
+    const thunk = updateTaskTC({ taskId, model: { status }, todolistId: todoListId });
     dispatch(thunk);
   }, []);
 
-  const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoListId: string) => {
-    const thunk = updateTaskTC(taskId, { title: newTitle }, todoListId);
+  const changeTaskTitle = useCallback((taskId: string, title: string, todoListId: string) => {
+    const thunk = updateTaskTC({ taskId, model: { title }, todolistId: todoListId });
     dispatch(thunk);
   }, []);
 
@@ -49,7 +49,7 @@ export const useApp = () => {
   }, []);
 
   const changeTodolistTitle = useCallback((id: string, title: string) => {
-    const thunk = changeTodolistTitleTC(id, title);
+    const thunk = changeTodolistTitleTC({ id, title });
     dispatch(thunk);
   }, []);
 
