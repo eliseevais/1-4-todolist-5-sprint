@@ -32,7 +32,8 @@
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "typescript": "^5.3.3",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "webpack-env": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -56,6 +57,12 @@
     ]
   },
   "devDependencies": {
+    "@types/webpack-env": "^1.18.5",
     "prettier": "3.3.3"
+  },
+  "compilerOptions": {
+    "types": [
+      "webpack-env"
+    ]
   }
 }

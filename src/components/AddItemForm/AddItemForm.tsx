@@ -2,8 +2,13 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import { AddBox } from "@mui/icons-material";
 
+export type AddItemFormSubmitHelperType = {
+  setError: (error: string) => void;
+  setTitle: (title: string) => void;
+};
+
 type AddItemFormPropsType = {
-  addItem: (title: string) => void;
+  addItem: (title: string, helpers: { setError: (error: string) => void; setTitle: (title: string) => void }) => void;
   disabled?: boolean;
 };
 
@@ -11,10 +16,24 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
   let [title, setTitle] = useState("");
   let [error, setError] = useState<string | null>(null);
 
+  // const addItemHandler = async () => {
+  //   if (title.trim() !== "") {
+  //     try {
+  //       await addItem(title);
+  //       setTitle("");
+  //     } catch (error) {
+  //       if (error instanceof Error) {
+  //         setError(error.message);
+  //       }
+  //     }
+  //   } else {
+  //     setError("Title is required");
+  //   }
+  // };
+
   const addItemHandler = () => {
     if (title.trim() !== "") {
-      addItem(title);
-      setTitle("");
+      addItem(title, { setError, setTitle });
     } else {
       setError("Title is required");
     }
@@ -45,7 +64,7 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
         label="Title"
         helperText={error}
       />
-      <IconButton color="primary" onClick={addItemHandler} disabled={disabled}>
+      <IconButton color="primary" onClick={addItemHandler} disabled={disabled} style={{ marginLeft: "32px" }}>
         <AddBox />
       </IconButton>
     </div>

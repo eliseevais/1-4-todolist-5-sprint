@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from "react";
-import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "./store";
-import { initializeAppTC, RequestStatusType } from "./app-reducer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "features/Login/Login";
-import { logoutTC } from "features/Login/auth-reducer";
+import { Menu } from "@mui/icons-material";
+import "./App.css";
+import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
+import { TodolistsList } from "features/TodolistsList";
+import { authActions, authSelectors, Login } from "features/Auth";
 import {
   AppBar,
   Button,
@@ -18,25 +16,28 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { appActions, appSelectors } from "features/Application";
+import { useActions } from "utils/redux-utils";
 
-type PropsType = {
-  demo?: boolean;
-};
+type PropsType = {};
 
-function App({ demo = false }: PropsType) {
-  const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status);
-  const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized);
-  const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn);
+function App(props: PropsType) {
+  const status = useSelector(appSelectors.selectStatus);
+  const isInitialized = useSelector(appSelectors.selectIsInitialized);
+  const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
   const dispatch = useDispatch<any>();
+  const { logout } = useActions(authActions);
+  const { initializeApp } = useActions(appActions);
 
   useEffect(() => {
-    dispatch(initializeAppTC());
+    if (!isInitialized) {
+      initializeApp();
+    }
   }, []);
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC());
+    logout();
   }, []);
 
   if (!isInitialized) {
@@ -56,7 +57,7 @@ function App({ demo = false }: PropsType) {
             <IconButton edge="start" color="inherit" aria-label="menu">
               <Menu />
             </IconButton>
-            <Typography variant="h6">News</Typography>
+            <Typography variant="h6">Menu</Typography>
             {isLoggedIn && (
               <Button color="inherit" onClick={logoutHandler}>
                 Log out
@@ -67,7 +68,7 @@ function App({ demo = false }: PropsType) {
         </AppBar>
         <Container fixed>
           <Routes>
-            <Route path={"/"} element={<TodolistsList demo={demo} />} />
+            <Route path={"/"} element={<TodolistsList demo={false} />} />
             <Route path={"/login"} element={<Login />} />
           </Routes>
         </Container>

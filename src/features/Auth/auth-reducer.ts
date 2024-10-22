@@ -1,19 +1,19 @@
 import { authAPI, FieldErrorType, LoginParamsType } from "api/todolists-api";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setAppStatus } from "app/app-reducer";
 import { clearTasksAndTodolists } from "common/actions/common.actions";
+import { appActions } from "features/Application";
 
-export const loginTC = createAsyncThunk<
+export const login = createAsyncThunk<
   undefined,
   LoginParamsType,
   { rejectValue: { errors: Array<string>; fieldsErrors?: Array<FieldErrorType> } }
 >("auth/login", async (param: LoginParamsType, { dispatch, rejectWithValue }) => {
-  dispatch(setAppStatus({ status: "loading" }));
+  dispatch(appActions.setAppStatus({ status: "loading" }));
   try {
     const res = await authAPI.login(param);
     if (res.data.resultCode === 0) {
-      dispatch(setAppStatus({ status: "succeeded" }));
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return;
     } else {
       handleServerAppError(res.data, dispatch);
@@ -28,12 +28,12 @@ export const loginTC = createAsyncThunk<
   }
 });
 
-export const logoutTC = createAsyncThunk("auth/logout", async (param, { dispatch, rejectWithValue }) => {
-  dispatch(setAppStatus({ status: "loading" }));
+export const logout = createAsyncThunk("auth/logout", async (param, { dispatch, rejectWithValue }) => {
+  dispatch(appActions.setAppStatus({ status: "loading" }));
   try {
     const res = await authAPI.logout();
     if (res.data.resultCode === 0) {
-      dispatch(setAppStatus({ status: "succeeded" }));
+      dispatch(appActions.setAppStatus({ status: "succeeded" }));
       dispatch(clearTasksAndTodolists());
       return;
     } else {
@@ -49,7 +49,12 @@ export const logoutTC = createAsyncThunk("auth/logout", async (param, { dispatch
   }
 });
 
-const slice = createSlice({
+export const authAsyncActions = {
+  login,
+  logout,
+};
+
+export const slice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
@@ -61,16 +66,15 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginTC.fulfilled, (state) => {
+      .addCase(login.fulfilled, (state) => {
         state.isLoggedIn = true;
       })
-      .addCase(logoutTC.fulfilled, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.isLoggedIn = false;
       });
   },
 });
 
-export const authReducer = slice.reducer;
 export const { setIsLoggedIn } = slice.actions;
 export const authActions = slice.actions;
 
