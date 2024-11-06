@@ -55,15 +55,29 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
 
   return (
     <>
-      <Grid container style={{ padding: "20px" }}>
+      <Grid
+        container
+        style={{
+          padding: "20px 20px 20px 44px",
+          width: "1080px",
+          margin: "0 auto",
+          boxSizing: "border-box",
+        }}
+      >
         <AddItemForm addItem={addTodolistLocal} />
       </Grid>
       <Grid
         container
         spacing={3}
         style={{
-          flexWrap: "nowrap",
-          overflowY: "scroll",
+          // flexWrap: "nowrap",
+          // overflowY: "scroll",
+          flexWrap: "wrap",
+          width: "1080px",
+          margin: "0 auto",
+          justifyContent: "flex-start",
+          padding: "10px",
+          boxSizing: "border-box",
         }}
       >
         {todolists.map((tl) => {
@@ -71,7 +85,14 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
 
           return (
             <Grid item key={tl.id}>
-              <Paper style={{ padding: "10px", width: "300px" }}>
+              <Paper
+                style={{
+                  padding: "10px",
+                  width: "300px",
+                  margin: "0 auto",
+                  justifyContent: "center",
+                }}
+              >
                 <Todolist todolist={tl} tasks={allTodolistTasks} demo={demo} />
               </Paper>
             </Grid>

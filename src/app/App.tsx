@@ -1,21 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Menu } from "@mui/icons-material";
 import "./App.css";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { TodolistsList } from "features/TodolistsList";
 import { authActions, authSelectors, Login } from "features/Auth";
-import {
-  AppBar,
-  Button,
-  CircularProgress,
-  Container,
-  IconButton,
-  LinearProgress,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Button, CircularProgress, Container, LinearProgress, Toolbar, Typography } from "@mui/material";
 import { appActions, appSelectors } from "features/Application";
 import { useActions } from "utils/redux-utils";
 
@@ -52,20 +42,22 @@ function App(props: PropsType) {
     <BrowserRouter>
       <div className="App">
         <ErrorSnackbar />
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <Menu />
-            </IconButton>
-            <Typography variant="h6">Menu</Typography>
-            {isLoggedIn && (
-              <Button color="inherit" onClick={logoutHandler}>
-                Log out
-              </Button>
-            )}
-          </Toolbar>
-          {status === "loading" && <LinearProgress />}
-        </AppBar>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static" color={"transparent"}>
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Tasks tracker
+              </Typography>
+              {isLoggedIn && (
+                <Button color="inherit" onClick={logoutHandler}>
+                  Log out
+                </Button>
+              )}
+            </Toolbar>
+            {status === "loading" && <LinearProgress />}
+          </AppBar>
+        </Box>
+
         <Container fixed>
           <Routes>
             <Route path={"/"} element={<TodolistsList demo={false} />} />

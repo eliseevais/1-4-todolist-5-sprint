@@ -1,26 +1,8 @@
-/*
-.Application {
-  padding: 30px;
-  display: flex;
+.App {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-image: url('../assetts/img/background.jpg');
+  object-fit: fill;
+  height: 100vh;
 }
-
-.Application > div {
-  margin-right: 50px;
-}
-
-.error {
-  border: red 1px solid;
-}
-
-.error-message {
-  color: red;
-}
-
-.active-filter {
-  background-color: aquamarine;
-}
-
-.is-done {
-  opacity: 0.5;
-}
-*/

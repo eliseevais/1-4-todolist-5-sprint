@@ -78,10 +78,10 @@ export const Todolist = React.memo(function ({ demo = false, ...props }: PropsTy
   const renderFilterButton = (buttonFilter: FilterValuesType, color: any, text: string) => {
     return (
       <Button
-        variant={props.todolist.filter === "all" ? "outlined" : "text"}
+        // variant={props.todolist.filter === "all" ? "outlined" : "text"}
         onClick={() => onFilterButtonClickHandler(buttonFilter)}
         color={color}
-        style={{ minWidth: "86px", maxWidth: "100px", margin: "4px", outline: "0.5px solid" }}
+        style={{ minWidth: "86px", maxWidth: "100px", margin: "4px", outline: "0.1px solid" }}
       >
         {text}
       </Button>
@@ -110,7 +110,7 @@ export const Todolist = React.memo(function ({ demo = false, ...props }: PropsTy
       <div style={{ paddingTop: "10px" }}>
         {renderFilterButton("all", "inherit", "All")}
         {renderFilterButton("active", "primary", "Active")}
-        {renderFilterButton("completed", "secondary", "Completed")}
+        {renderFilterButton("completed", "success", "Completed")}
       </div>
     </div>
   );

@@ -16,21 +16,6 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
   let [title, setTitle] = useState("");
   let [error, setError] = useState<string | null>(null);
 
-  // const addItemHandler = async () => {
-  //   if (title.trim() !== "") {
-  //     try {
-  //       await addItem(title);
-  //       setTitle("");
-  //     } catch (error) {
-  //       if (error instanceof Error) {
-  //         setError(error.message);
-  //       }
-  //     }
-  //   } else {
-  //     setError("Title is required");
-  //   }
-  // };
-
   const addItemHandler = () => {
     if (title.trim() !== "") {
       addItem(title, { setError, setTitle });
@@ -55,7 +40,8 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
   return (
     <div>
       <TextField
-        variant="outlined"
+        id="filled-basic"
+        variant="filled"
         disabled={disabled}
         error={!!error}
         value={title}
@@ -63,8 +49,9 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: A
         onKeyPress={onKeyPressHandler}
         label="Title"
         helperText={error}
+        sx={{ width: "29ch" }}
       />
-      <IconButton color="primary" onClick={addItemHandler} disabled={disabled} style={{ marginLeft: "32px" }}>
+      <IconButton color="primary" onClick={addItemHandler} disabled={disabled} style={{ marginLeft: "2px" }}>
         <AddBox />
       </IconButton>
     </div>
