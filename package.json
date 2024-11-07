@@ -7,7 +7,7 @@
   },
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/eliseevais/1-4-todolist-5-sprint/",
+  "homepage": "https://eliseevais.github.io/1-4-todolist-5-sprint/",
   "dependencies": {
     "@babel/runtime": "^7.23.7",
     "@emotion/react": "^11.11.3",
