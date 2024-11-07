@@ -20,6 +20,7 @@ const fetchTodolists = createAsyncThunk("todolists/fetchTodolists", async (param
     return rejectWithValue(null);
   }
 });
+
 const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, ThunkErrorType>(
   "todolists/addTodolist",
   async (title: string, { dispatch, rejectWithValue }) => {
@@ -42,6 +43,7 @@ const addTodolist = createAsyncThunk<{ todolist: TodolistType }, string, ThunkEr
     }
   },
 );
+
 const changeTodolistTitle = createAsyncThunk(
   "todolists/changeTodolistTitle",
   async (param: { id: string; title: string }, { dispatch, rejectWithValue }) => {

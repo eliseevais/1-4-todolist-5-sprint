@@ -58,7 +58,7 @@ function App(props: PropsType) {
           </AppBar>
         </Box>
 
-        <Container fixed>
+        <Container fixed style={{ margin: "0px auto", width: "100%" }}>
           <Routes>
             <Route path={"/"} element={<TodolistsList demo={false} />} />
             <Route path={"/login"} element={<Login />} />

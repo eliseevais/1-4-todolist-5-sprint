@@ -2,7 +2,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  background-image: url('../assetts/img/background.jpg');
-  object-fit: fill;
-  height: 100vh;
+  background-color: #EAEAEA;
+  min-height: 100vh;
 }

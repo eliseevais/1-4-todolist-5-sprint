@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Grid, Paper } from "@mui/material";
+import { AppRootStateType } from "utils/types";
 import { TodolistDomainType, todolistsAsyncActions } from "./todolists-reducer";
 import { TasksStateType } from "./tasks-reducer";
-import { Grid, Paper } from "@mui/material";
 import { AddItemForm, AddItemFormSubmitHelperType } from "components/AddItemForm/AddItemForm";
 import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
-import { authSelectors } from "features/Auth";
-import { todolistsActions } from "features/TodolistsList";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useActions } from "utils/redux-utils";
-import { AppRootStateType } from "utils/types";
+import { authSelectors } from "features/Auth";
+import { todolistsActions } from "features/TodolistsList";
 
 type PropsType = {
   demo?: boolean;
@@ -58,7 +58,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       <Grid
         container
         style={{
-          padding: "20px 20px 20px 44px",
+          padding: "20px 0 0 0",
           width: "1080px",
           margin: "0 auto",
           boxSizing: "border-box",
@@ -69,6 +69,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       <Grid
         container
         spacing={3}
+        sx={{ minWidth: "100%" }}
         style={{
           // flexWrap: "nowrap",
           // overflowY: "scroll",
@@ -84,13 +85,14 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
           let allTodolistTasks = tasks[tl.id];
 
           return (
-            <Grid item key={tl.id}>
+            <Grid item key={tl.id} style={{ padding: "12px" }}>
               <Paper
                 style={{
-                  padding: "10px",
-                  width: "300px",
+                  padding: "16px",
+                  width: "350px",
                   margin: "0 auto",
                   justifyContent: "center",
+                  boxSizing: "border-box",
                 }}
               >
                 <Todolist todolist={tl} tasks={allTodolistTasks} demo={demo} />

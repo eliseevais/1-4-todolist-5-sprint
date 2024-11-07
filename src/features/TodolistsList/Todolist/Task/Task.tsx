@@ -1,12 +1,10 @@
 import React, { ChangeEvent, useCallback } from "react";
 import { Checkbox, IconButton } from "@mui/material";
-import { EditableSpan } from "components/EditableSpan/EditableSpan";
 import { Delete } from "@mui/icons-material";
+import { EditableSpan } from "components/EditableSpan/EditableSpan";
 import { TaskStatuses, TaskType } from "api/todolists-api";
-import { tasksActions } from "features/TodolistsList";
 import { useActions } from "utils/redux-utils";
-
-// 2-08
+import { tasksActions } from "features/TodolistsList";
 
 type TaskPropsType = {
   task: TaskType;
@@ -51,7 +49,7 @@ export const Task = React.memo((props: TaskPropsType) => {
       <Checkbox checked={props.task.status === TaskStatuses.Completed} color="primary" onChange={onChangeHandler} />
 
       <EditableSpan value={props.task.title} onChange={onTitleChangeHandler} />
-      <IconButton onClick={onClickHandler} style={{ position: "absolute", top: "2px", right: "5px" }}>
+      <IconButton onClick={onClickHandler} style={{ position: "absolute", top: "2px", right: "2px" }}>
         <Delete fontSize={"small"} />
       </IconButton>
     </div>
