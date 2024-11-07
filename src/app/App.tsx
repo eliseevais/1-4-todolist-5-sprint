@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { TodolistsList } from "features/TodolistsList";
@@ -39,7 +39,7 @@ function App(props: PropsType) {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <ErrorSnackbar />
         <Box sx={{ flexGrow: 1 }}>
@@ -65,7 +65,7 @@ function App(props: PropsType) {
           </Routes>
         </Container>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
