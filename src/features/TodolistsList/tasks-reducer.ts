@@ -90,8 +90,8 @@ const updateTask = createAsyncThunk(
 );
 const removeTask = createAsyncThunk(
   "tasks/removeTask",
-  async (param: { taskId: string; todolistId: string }, thunkAPI) => {
-    return todolistsAPI.deleteTask(param.todolistId, param.taskId).then((res) => {
+  async (param: { taskId: string; todolistId: string }, _thunkAPI) => {
+    return todolistsAPI.deleteTask(param.todolistId, param.taskId).then((_res) => {
       return { taskId: param.taskId, todolistId: param.todolistId };
     });
   },
@@ -120,7 +120,7 @@ export const slice = createSlice({
           state[tl.id] = [];
         });
       })
-      .addCase(clearTasksAndTodolists, (state, action) => {
+      .addCase(clearTasksAndTodolists, (_state, _action) => {
         return {};
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {
@@ -144,7 +144,6 @@ export const slice = createSlice({
   },
 });
 
-// types
 export type UpdateDomainTaskModelType = {
   title?: string;
   description?: string;

@@ -78,7 +78,6 @@ export const slice = createSlice({
 export const { setIsLoggedIn } = slice.actions;
 export const authActions = slice.actions;
 
-// types
 type InitialStateType = {
   isLoggedIn: boolean;
 };

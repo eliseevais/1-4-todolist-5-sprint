@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { TodolistsList } from "features/TodolistsList";
@@ -9,14 +9,11 @@ import { AppBar, Box, Button, CircularProgress, Container, LinearProgress, Toolb
 import { appActions, appSelectors } from "features/Application";
 import { useActions } from "utils/redux-utils";
 
-type PropsType = {};
-
-function App(props: PropsType) {
+function App() {
   const status = useSelector(appSelectors.selectStatus);
   const isInitialized = useSelector(appSelectors.selectIsInitialized);
   const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
 
-  const dispatch = useDispatch<any>();
   const { logout } = useActions(authActions);
   const { initializeApp } = useActions(appActions);
 
@@ -46,7 +43,7 @@ function App(props: PropsType) {
           <AppBar position="static" color={"transparent"}>
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Tasks tracker
+                Task master
               </Typography>
               {isLoggedIn && (
                 <Button color="inherit" onClick={logoutHandler}>

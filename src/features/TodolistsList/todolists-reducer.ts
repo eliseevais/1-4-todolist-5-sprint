@@ -73,7 +73,7 @@ const removeTodolist = createAsyncThunk(
     dispatch(appActions.setAppStatus({ status: "loading" }));
     dispatch(changeTodolistEntityStatus({ id: todolistId, status: "loading" }));
     try {
-      const res = await todolistsAPI.deleteTodolist(todolistId);
+      await todolistsAPI.deleteTodolist(todolistId);
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { id: todolistId };
     } catch (error) {
@@ -111,7 +111,7 @@ export const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(clearTasksAndTodolists, (state, action) => {
+      .addCase(clearTasksAndTodolists, (_state, _action) => {
         return [];
       })
       .addCase(fetchTodolists.fulfilled, (state, action) => {
@@ -135,7 +135,6 @@ export const slice = createSlice({
 
 export const { changeTodolistFilter, changeTodolistEntityStatus } = slice.actions;
 
-// types
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType;
